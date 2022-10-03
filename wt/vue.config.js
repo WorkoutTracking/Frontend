@@ -3,8 +3,13 @@ module.exports = defineConfig({
   transpileDependencies: true,
   pwa: {
     name: "Workout Tracking",
+    display: "fullscreen",
+    appleMobileWebAppCapable: "yes",
+    appleMobileWebAppStatusBarStyle: "#2D2B41",
     manifestOptions: {
       short_name: "WT",
+      theme_color: "#2D2B41",
+      background_color: "#2D2B41",
       icons: [
         {
           "src": "img/besticons/android-launchericon-192-192.png",
@@ -32,11 +37,6 @@ module.exports = defineConfig({
         }
       ]
     },
-    themeColor: "#2D2B41",
-    msTileColor: "#ffffff",
-    display: "fullscreen",
-    appleMobileWebAppCapable: "yes",
-    appleMobileWebAppStatusBarStyle: "#2D2B41",
     iconPaths: {
       favicon32: 'img/besticons/favicon-32x32.png',
       favicon16: 'img/besticons/favicon-16x16.png',
