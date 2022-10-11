@@ -1,5 +1,4 @@
 <template>
-  <footer>
-    Footer
+  <footer class="site-footer">
   </footer>
 </template>

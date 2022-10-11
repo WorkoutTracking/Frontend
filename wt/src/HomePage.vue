@@ -1,7 +1,7 @@
 <script setup>
-  import HelloWorld from '@/components/HelloWorld'
+  import StartNewWorkout from '@/components/StartNewWorkout'
 </script>
 
 <template>
-  <HelloWorld />
+  <StartNewWorkout />
 </template>

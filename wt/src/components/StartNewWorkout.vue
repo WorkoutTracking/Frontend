@@ -1,9 +1,9 @@
 <template>
-  <div class="hello">
-    <h1>Users</h1>
+  <div>
+    <h1>Workouts</h1>
 
     <div v-if="isLoaded">
-      <p>{{ users }}</p>
+      <p>{{ workouts }}</p>
     </div>
     <div v-else>
       <p>Loading...</p>
@@ -20,7 +20,7 @@ export default {
   },
   data () {
     return {
-      users: {},
+      workouts: {},
       isLoaded: false
     }
   },
@@ -35,12 +35,12 @@ export default {
           'Accept': 'application/json'
         }
       }
-      axios.get(`${process.env.VUE_APP_BACK_END_API_URL}`, config).then((response) => {
+      axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/users`, config).then((response) => {
         this.isLoaded = true;
         // Check the response was a success
         if(response.status === 200)
         {
-          this.users = response.data;
+          this.workouts = response.data;
         }
       });
     }
