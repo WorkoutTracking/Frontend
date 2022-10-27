@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Workouts tes</h1>
+    <h1>Workouts test</h1>
 
     <div v-if="areWorkoutsLoaded">
       <div v-for="(workout, index) in workouts" v-bind:key="index">
