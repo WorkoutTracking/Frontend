@@ -1,5 +1,5 @@
 <script setup>
-  import StartNewWorkout from '@/components/StartNewWorkout'
+  import StartNewWorkout from '@/components/StartNewWorkout';
 </script>
 
 <template>
