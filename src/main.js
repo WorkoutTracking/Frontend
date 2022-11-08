@@ -11,7 +11,9 @@ app.use(router)
         createAuth0({
             domain: "dev-vvr65zntgft7vbt4.us.auth0.com",
             client_id: "HYG2eZkXMIPSGMTGSEmMamO9xOT3D984",
-            redirect_uri: window.location.origin
+            redirect_uri: window.location.origin,
+            useRefreshTokens: true,
+            cacheLocation: 'localstorage'
         })
     )
     .mount('#app');

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="isAuthenticated">
     start workout
     <form v-on:submit.prevent="startWorkout">
       <div class="form-group">
@@ -25,6 +25,7 @@ export default {
   },
   data () {
     return {
+      isAuthenticated: this.$auth0.isAuthenticated,
       form: {
         name: ''
       }
@@ -37,10 +38,13 @@ export default {
           'Content-Type': 'application/json'
         }
       }
-      axios.post(`${process.env.VUE_APP_BACK_END_API_URL}/workouts`, { name: this.form.name }, {config})
-          .then(() => {
+      await axios.post(`${process.env.VUE_APP_BACK_END_API_URL}/workouts`, { name: this.form.name, user_email: this.$auth0.user.value.email }, {config})
+          .then((res) => {
             this.form.name = ''
             window.location.reload()
+            //Go to overview of workout. give the location with it and make axios request with this link to get workout info. then make axios request for all exercises
+
+            console.log(res.headers.location)
           })
           .catch((error) => {
             console.log(error)

@@ -5,27 +5,19 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <router-link to="/" class="nav-link">Home</router-link>
+              <router-link to="/" class="nav-link active">Workouts</router-link>
             </li>
             <li class="nav-item">
               <router-link to="/stats" class="nav-link">Stats</router-link>
             </li>
-          </ul>
-          <ul class="navbar-nav d-md-none" v-if="!isAuthenticated && !isLoading">
-            <li>
+            <li style="float:right" v-if="!isAuthenticated">
               <a id="qsLoginBtn" href="#" class @click="login">Log in</a>
             </li>
-          </ul>
-
-          <ul id="mobileAuthNavBar" class="navbar-nav d-md-none d-flex" v-if="isAuthenticated">
-            <li class="nav-item">
-              <h6 class="d-inline-block">{{ user.name }}</h6>
-            </li>
-            <li>
-              <router-link to="/profile">Profile</router-link>
-            </li>
-            <li>
+            <li style="float:right" v-if="isAuthenticated">
               <a id="qsLogoutBtn" href="#" class @click="logout">Log out</a>
+            </li>
+            <li style="float:right" v-if="isAuthenticated">
+              <a href="">{{ user.email }}</a>
             </li>
           </ul>
         </div>
@@ -41,23 +33,45 @@ export default {
     return {
       isAuthenticated: this.$auth0.isAuthenticated,
       isLoading: this.$auth0.isLoading,
-      user: this.$auth0.user,
+      user: this.$auth0.user
     };
   },
   methods: {
     async login() {
-      this.$auth0.loginWithRedirect();
+      await this.$auth0.loginWithRedirect();
     },
     async logout() {
-      this.$auth0.logout({ returnTo: window.location.origin });
+      await this.$auth0.logout({ returnTo: window.location.origin });
     }
   }
 };
 </script>
 
 <style>
-#mobileAuthNavBar {
-  min-height: 125px;
-  justify-content: space-between;
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  color: #34D2C1;
+}
+
+li a.router-link-active {
+  color: #34D2C1;
 }
 </style>
