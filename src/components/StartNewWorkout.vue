@@ -1,31 +1,20 @@
 <template>
-  <div v-if="isAuthenticated">
-    start workout
-    <form v-on:submit.prevent="startWorkout">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" placeholder="Workout name" v-model="form.name">
-      </div>
-
-      <div class="form-group">
-        <button class="btn btn-primary">Submit</button>
-      </div>
-    </form>
-
-  </div>
+  <form v-on:submit.prevent="startWorkout">
+    <div class="mb-3">
+      <input type="text" class="form-control" id="name" placeholder="Workout name" v-model="form.name">
+    </div>
+    <button type="submit" class="btn btn-lg btn-add-workout">Start New Workout</button>
+  </form>
 </template>
 
 <script>
 import axios from 'axios';
+import router from "@/router";
 
 export default {
   name: 'StartNewWorkout',
-  props: {
-    msg: String
-  },
   data () {
     return {
-      isAuthenticated: this.$auth0.isAuthenticated,
       form: {
         name: ''
       }
@@ -35,16 +24,16 @@ export default {
     async startWorkout(){
       const config = {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem("vue-token")
         }
-      }
-      await axios.post(`${process.env.VUE_APP_BACK_END_API_URL}/workouts`, { name: this.form.name, user_email: this.$auth0.user.value.email }, {config})
+      };
+      console.log(this.$keycloak.profile.email)
+      await axios.post(`${process.env.VUE_APP_BACK_END_API_URL}/workouts`, { name: this.form.name, user_email: this.$keycloak.profile.email }, config)
           .then((res) => {
-            this.form.name = ''
-            window.location.reload()
+            this.form.name = '';
             //Go to overview of workout. give the location with it and make axios request with this link to get workout info. then make axios request for all exercises
-
-            console.log(res.headers.location)
+            router.push('/workout/'+res.data.id)
           })
           .catch((error) => {
             console.log(error)
@@ -56,4 +45,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.btn-add-workout {
+  color: white;
+  border: none;
+  background: linear-gradient(270deg, #5782FF 0%, #34D2C1 42.1%, #34D2C1 100%);
+  padding: 10px;
+}
 </style>

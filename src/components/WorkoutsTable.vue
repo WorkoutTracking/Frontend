@@ -1,114 +1,91 @@
 <template>
-  <div v-if="isAuthenticated">
-    <h1>Workouts</h1>
-
-    <div v-if="areWorkoutsLoaded">
-      <div v-for="(workout, index) in workouts" v-bind:key="index">
-        <div>
-          Index = {{ index }}
-          <br>
-          Id: {{ workout.id }}
-          <br>
-          Name: {{ workout.name }}
-          <br>
-          User email: {{ workout.user_email }}
+  <div class="row">
+    <div class="col-xl-12">
+      <table>
+        <tbody>
+        <div v-for="(workout, x) in workoutsWithExercises" v-bind:key="x">
+          <tr>
+            <td>
+              <h3>Workout</h3>
+              Name: {{ workout.name }} <br>
+              Date: {{ workout.created_at.substring(0,10) }} <br>
+              Time: {{ workout.created_at.substring(11, 19) }}
+            </td>
+            <td>
+              <h3>Exercises</h3>
+              <div v-if="workoutsWithExercises[x].Exercises.length > 0">
+                <div v-for="(exercise, i) in workoutsWithExercises[x].Exercises" v-bind:key="i">
+                  {{ exercise.name }}
+                </div>
+              </div>
+              <div v-else>
+                No exercises
+              </div>
+            </td>
+            <td>
+              <div class="set-control-group d-flex justify-content-center align-items-center">
+                <router-link :to="'/workout/'+workout.id" class="">Edit workout</router-link>
+              </div>
+            </td>
+          </tr>
         </div>
-        <br>
-      </div>
+        </tbody>
+      </table>
     </div>
-    <div v-else>
-      <p>Loading workout data...</p>
-    </div>
-
-    <div v-if="areExercisesLoaded">
-      <h2>Exercises</h2>
-      <div v-for="(exercises, i) in multiArrExercises" :key="i">
-        {{i}}
-        <div v-for="(exercise, index) in exercises" :key="index">
-          Index = {{ index }}
-          <br>
-          Id: {{ exercise.id }}
-          <br>
-          Name: {{ exercise.name }}
-          <br>
-          Workout ID: {{ exercise.workout_id }}
-          <br>
-          <br>
-
-        </div>
-        <br>
-        <br>
-      </div>
-    </div>
-    <div v-else>
-      <p>Loading exercise data...</p>
-    </div>
-  </div>
-  <div v-else>
-    Not logged in
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import {onMounted, ref} from "vue";
 
 export default {
   name: 'WorkoutsTable',
-  props: {
-    msg: String
-  },
-  data () {
-    return {
-      workouts: [],
-      multiArrExercises: [],
-      areWorkoutsLoaded: false,
-      areExercisesLoaded: false,
-      isAuthenticated: this.$auth0.isAuthenticated,
-    }
-  },
-  mounted() {
-    this.getWorkouts();
-  },
-  methods: {
-    async getWorkouts(){
-      const config = {
-        headers: {
-          'Accept': 'application/json'
-        }
+  setup() {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem("vue-token")
       }
-      await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/workouts`, config).then((response) => {
-        // Check the response was a success
-        if(response.status === 200) {
-          this.workouts = response.data;
-          this.areWorkoutsLoaded = true;
-          Array.from(this.workouts).forEach((workout) =>{
-            console.log(workout.id);
-            this.getWorkoutExercises(workout.id);
-          });
-        }
-      });
-    },
-    async getWorkoutExercises(workout_id){
-      const config = {
-        headers: {
-          'Accept': 'application/json'
-        }
-      }
-      await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/exercises/workout/`+workout_id, config).then((response) => {
-        // Check the response was a success
-        if(response.status === 200) {
-          console.log(response.data)
+    };
+    let workoutsWithExercises = ref([]);
 
-          this.multiArrExercises.push(response.data);
-          this.areExercisesLoaded = true;
-        }
-      });
-      console.log(this.multiArrExercises);
-    }
+    onMounted(async () => {
+      let tempWorkoutsWithExercise = await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/workouts`, config).then(r => r.data);
+      for (const workout of tempWorkoutsWithExercise) {
+        const index = tempWorkoutsWithExercise.indexOf(workout);
+        tempWorkoutsWithExercise[index].Exercises = await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/exercises/workout/`+workout.id, config).then(r => r.data);
+      }
+      workoutsWithExercises.value = tempWorkoutsWithExercise;
+    });
+    return {workoutsWithExercises}
   }
 }
 </script>
 
 <style scoped>
 
+table {
+  border-collapse: separate;
+  border-spacing: 0 20px;
+}
+
+tr {
+  background: #2E2C42;
+  filter: drop-shadow(0px 3px 6px #00000020);
+  display: table;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+td {
+  color: #ffffff;
+  border: none;
+  padding: 0px 10px 0px 30px !important;
+  max-width: 100%;
+}
+
+.type-list-comma:last-child {
+  display: none;
+}
 </style>
