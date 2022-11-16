@@ -8,6 +8,7 @@ module.exports = defineConfig({
     appleMobileWebAppStatusBarStyle: "#2D2B41",
     manifestOptions: {
       short_name: "WT",
+      start_url: "/",
       theme_color: "#2D2B41",
       background_color: "#2D2B41",
       icons: [

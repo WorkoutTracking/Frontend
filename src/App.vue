@@ -1,20 +1,23 @@
 <script>
   import AppHeader from "@/components/AppHeader";
   import AppFooter from "@/components/AppFooter";
+
   export default {
     name: 'App',
     components: {
       AppHeader,
-      AppFooter
+      AppFooter,
     },
   }
 
 </script>
 
 <template>
-  <AppHeader/>
-  <router-view/>
-  <AppFooter/>
+  <main>
+    <AppHeader/>
+    <router-view/>
+    <AppFooter/>
+  </main>
 </template>
 
 

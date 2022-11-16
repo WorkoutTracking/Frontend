@@ -1,77 +1,50 @@
 <template>
-  <div class="nav-container mb-3">
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
-      <div class="container">
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <router-link to="/" class="nav-link active">Workouts</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link to="/stats" class="nav-link">Stats</router-link>
-            </li>
-            <li style="float:right" v-if="!isAuthenticated">
-              <a id="qsLoginBtn" href="#" class @click="login">Log in</a>
-            </li>
-            <li style="float:right" v-if="isAuthenticated">
-              <a id="qsLogoutBtn" href="#" class @click="logout">Log out</a>
-            </li>
-            <li style="float:right" v-if="isAuthenticated">
-              <a href="">{{ user.email }}</a>
-            </li>
-          </ul>
-        </div>
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li>
+          <router-link to="/" class="nav-link px-2">Workouts</router-link>
+        </li>
+        <li>
+          <router-link to="/stats" class="nav-link px-2">Stats</router-link>
+        </li>
+      </ul>
+      <div v-if="isAuthenticated" class="text-end">
+        {{user.email}}
+        <button type="button" class="btn btn-outline-light me-2" @click="logout">Logout</button>
       </div>
-    </nav>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "AppHeader",
-  data: function () {
+  data() {
     return {
-      isAuthenticated: this.$auth0.isAuthenticated,
-      isLoading: this.$auth0.isLoading,
-      user: this.$auth0.user
-    };
+      isAuthenticated: this.$keycloak.authenticated,
+      user: this.$keycloak.profile,
+    }
   },
   methods: {
-    async login() {
-      await this.$auth0.loginWithRedirect();
-    },
     async logout() {
-      await this.$auth0.logout({ returnTo: window.location.origin });
+      this.$keycloak.logout();
     }
   }
 };
 </script>
 
-<style>
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
-li {
-  float: left;
-}
-
+<style scoped>
 li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
+  color: white !important;
+  text-decoration: none !important;
 }
 
 li a:hover {
-  color: #34D2C1;
+  color: #34D2C1 !important;
 }
 
 li a.router-link-active {
-  color: #34D2C1;
+  color: #34D2C1 !important;
 }
 </style>
