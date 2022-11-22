@@ -16,14 +16,15 @@ let keycloak = Keycloak(initOptions);
 keycloak.init({ onLoad: initOptions.onLoad }).then(async (auth) => {
     if (!auth) {
         window.location.reload();
-    }
-    await keycloak.loadUserInfo();
-    await keycloak.loadUserProfile();
-    localStorage.setItem("vue-token", keycloak.token);
+    } else {
+        await keycloak.loadUserInfo();
+        await keycloak.loadUserProfile();
+        localStorage.setItem("vue-token", keycloak.token);
 
-    const app = createApp(App);
-    app.config.globalProperties.$keycloak = keycloak;
-    app.use(router).mount('#app');
+        const app = createApp(App);
+        app.config.globalProperties.$keycloak = keycloak;
+        app.use(router).mount('#app');
+    }
 
     setInterval(() => {
         keycloak.updateToken(70).then((refreshed) => {
