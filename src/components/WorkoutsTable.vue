@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-xl-12">
+    <div class="col-xl-12" v-if="workoutsWithExercises.hasEntities">
       <table>
         <tbody>
         <div v-for="(workout, x) in workoutsWithExercises" v-bind:key="x">
@@ -32,16 +32,24 @@
         </tbody>
       </table>
     </div>
+    <div v-else>
+      You have no workouts. Fill the above form and click on start new workout.
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import {onMounted, ref} from "vue";
+import { getCurrentInstance } from 'vue'
+
 
 export default {
   name: 'WorkoutsTable',
   setup() {
+    const app = getCurrentInstance()
+    const keycloak = app.appContext.config.globalProperties.$keycloak
+
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -51,11 +59,13 @@ export default {
     let workoutsWithExercises = ref([]);
 
     onMounted(async () => {
-      let tempWorkoutsWithExercise = await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/workouts`, config).then(r => r.data);
+      let tempWorkoutsWithExercise = await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/workouts/user/`+keycloak.profile.email, config).then(r => r.data);
       for (const workout of tempWorkoutsWithExercise) {
         const index = tempWorkoutsWithExercise.indexOf(workout);
         tempWorkoutsWithExercise[index].Exercises = await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/exercises/workout/`+workout.id, config).then(r => r.data);
       }
+      tempWorkoutsWithExercise.hasEntities = tempWorkoutsWithExercise.length > 0;
+
       workoutsWithExercises.value = tempWorkoutsWithExercise;
     });
     return {workoutsWithExercises}

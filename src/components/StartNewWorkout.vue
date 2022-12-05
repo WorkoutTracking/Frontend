@@ -1,6 +1,6 @@
 <template>
   <form v-on:submit.prevent="startWorkout">
-    <div class="mb-3">
+    <div class="mb-3 col-1">
       <input type="text" class="form-control" id="name" placeholder="Workout name" v-model="form.name">
     </div>
     <button type="submit" class="btn btn-lg btn-add-workout">Start New Workout</button>
@@ -28,8 +28,8 @@ export default {
           'Authorization': 'Bearer ' + localStorage.getItem("vue-token")
         }
       };
-      console.log(this.$keycloak.profile.email)
-      await axios.post(`${process.env.VUE_APP_BACK_END_API_URL}/workouts`, { name: this.form.name, user_email: this.$keycloak.profile.email }, config)
+
+      await axios.post(`${process.env.VUE_APP_BACK_END_API_URL}/workouts/` + this.form.name + `/` + this.$keycloak.profile.email, {}, config)
           .then((res) => {
             this.form.name = '';
             //Go to overview of workout. give the location with it and make axios request with this link to get workout info. then make axios request for all exercises
@@ -49,6 +49,20 @@ export default {
   color: white;
   border: none;
   background: linear-gradient(270deg, #5782FF 0%, #34D2C1 42.1%, #34D2C1 100%);
-  padding: 10px;
+  padding: 5px 50px;
+  border-radius: 55px;
+  font-size: 18px;
+}
+
+.form-control {
+  background: none;
+  border-color: #34D2C1;
+  color: #616161;
+  border-radius: 25px;
+}
+
+.form-control:focus {
+  background: none;
+  color: #fff;
 }
 </style>
