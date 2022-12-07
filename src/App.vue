@@ -1,19 +1,19 @@
 <script>
-  import AppHeader from "@/components/AppHeader";
-  import AppFooter from "@/components/AppFooter";
+import AppHeader from "@/components/AppHeader";
+import AppFooter from "@/components/AppFooter";
 
-  export default {
-    name: 'App',
-    components: {
-      AppHeader,
-      AppFooter,
-    },
-  }
+export default {
+  name: 'App',
+  components: {
+    AppHeader,
+    AppFooter,
+  },
+}
 
 </script>
 
 <template>
-  <main>
+  <main class="container-fluid">
     <AppHeader/>
     <router-view/>
     <AppFooter/>
@@ -21,14 +21,26 @@
 </template>
 
 
-
-<style>
-* {
-  background-color: #2D2B41;
+<style lang="scss">
+html, body {
+  background-color: #2D2B41 !important;
 }
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   color: #ffffff;
+
+}
+
+.form-control {
+  background: none !important;
+  border-color: #34D2C1 !important;
+  color: #fff !important;
+  border-radius: 25px !important;
+}
+
+.form-control:focus {
+  background: none !important;
+  color: #fff !important;
 }
 </style>

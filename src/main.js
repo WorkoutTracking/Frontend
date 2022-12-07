@@ -2,11 +2,10 @@ import {createApp} from 'vue';
 import App from './App.vue';
 import router from "./router";
 import Keycloak from "keycloak-js";
+import axios from "axios";
+import './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
-import './registerServiceWorker';
-import axios from "axios";
-
 
 let initOptions = {
     url: 'http://localhost:8484/', realm: 'workouttracking', clientId: 'frontend-service', onLoad:'login-required'
@@ -39,6 +38,7 @@ keycloak.init({ onLoad: initOptions.onLoad }).then(async (auth) => {
                     console.log(err)
                 }
             });
+
 
         const app = createApp(App);
         app.config.globalProperties.$keycloak = keycloak;

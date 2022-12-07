@@ -1,11 +1,11 @@
 <template>
   <div class="row">
-    <div class="col-xl-12" v-if="workoutsWithExercises.hasEntities">
+    <div class="col-xl-12" v-if="workoutsWithExercises">
       <table>
         <tbody>
-        <div v-for="(workout, x) in workoutsWithExercises" v-bind:key="x">
+        <div v-for="(workout, x) in workoutsWithExercises" :key="workout.created_at">
           <tr>
-            <td>
+            <td data-test="workoutInfo">
               <h3>Workout</h3>
               Name: {{ workout.name }} <br>
               Date: {{ workout.created_at.substring(0,10) }} <br>
@@ -43,12 +43,11 @@ import axios from 'axios';
 import {onMounted, ref} from "vue";
 import { getCurrentInstance } from 'vue'
 
-
 export default {
   name: 'WorkoutsTable',
   setup() {
-    const app = getCurrentInstance()
-    const keycloak = app.appContext.config.globalProperties.$keycloak
+    const app = getCurrentInstance();
+    const keycloak = app.appContext.config.globalProperties.$keycloak;
 
     const config = {
       headers: {
@@ -59,12 +58,11 @@ export default {
     let workoutsWithExercises = ref([]);
 
     onMounted(async () => {
-      let tempWorkoutsWithExercise = await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/workouts/user/`+keycloak.profile.email, config).then(r => r.data);
+      const tempWorkoutsWithExercise = await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/workouts/user/`+keycloak.profile.email, config).then(r => r.data);
       for (const workout of tempWorkoutsWithExercise) {
         const index = tempWorkoutsWithExercise.indexOf(workout);
         tempWorkoutsWithExercise[index].Exercises = await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/exercises/workout/`+workout.id, config).then(r => r.data);
       }
-      tempWorkoutsWithExercise.hasEntities = tempWorkoutsWithExercise.length > 0;
 
       workoutsWithExercises.value = tempWorkoutsWithExercise;
     });
@@ -93,9 +91,5 @@ td {
   border: none;
   padding: 0px 10px 0px 30px !important;
   max-width: 100%;
-}
-
-.type-list-comma:last-child {
-  display: none;
 }
 </style>
