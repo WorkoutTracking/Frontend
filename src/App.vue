@@ -9,7 +9,6 @@ export default {
     AppFooter,
   },
 }
-
 </script>
 
 <template>
@@ -17,6 +16,9 @@ export default {
     <AppHeader/>
     <router-view/>
     <AppFooter/>
+    <teleport to="body">
+      <vue3-snackbar bottom right :duration="4000"></vue3-snackbar>
+    </teleport>
   </main>
 </template>
 

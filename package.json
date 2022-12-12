@@ -24,6 +24,7 @@
     "vue-axios": "^3.4.1",
     "vue-router": "^4.1.5",
     "vue-session": "^1.0.0",
+    "vue3-snackbar": "^1.1.2",
     "vuex": "^4.1.0"
   },
   "devDependencies": {
@@ -37,7 +38,9 @@
     "@vue/test-utils": "^2.0.0-0",
     "@vue/vue3-jest": "^27.0.0-alpha.3",
     "babel-jest": "^27.0.6",
+    "cypress": "^12.0.2",
     "eslint": "^7.32.0",
+    "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-vue": "^8.0.3",
     "node-sass": "^7.0.3",
     "sass-loader": "^13.1.0"
@@ -49,7 +52,8 @@
     },
     "extends": [
       "plugin:vue/vue3-essential",
-      "eslint:recommended"
+      "eslint:recommended",
+      "plugin:cypress/recommended"
     ],
     "parserOptions": {
       "parser": "@babel/eslint-parser"

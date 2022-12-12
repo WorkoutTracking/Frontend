@@ -1,5 +1,5 @@
 <template>
-  <form v-on:submit.prevent="startWorkout">
+  <form class="startNewWorkout" v-on:submit.prevent="startWorkout">
     <div class="mb-3 col-2">
       <input id="name" v-model="form.name" class="form-control" placeholder="Workout name" type="text">
     </div>
@@ -41,7 +41,11 @@ export default {
             .then((res) => {
               this.form.name = '';
               //Go to overview of workout. give the location with it and make axios request with this link to get workout info. then make axios request for all exercises
-              router.push('/workout/' + res.data.id)
+              router.push('/workout/' + res.data.id);
+              this.$snackbar.add({
+                type: 'info',
+                title: 'Workout added!'
+              });
             })
             .catch((error) => {
               console.log(error)
