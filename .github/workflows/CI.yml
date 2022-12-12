@@ -7,7 +7,6 @@ on:
 jobs:
   integration_and_unit_tests:
     runs-on: ubuntu-latest
-    container: cypress/browsers:node12.18.3-chrome87-ff82
 
     strategy:
       matrix:
@@ -23,9 +22,5 @@ jobs:
         run: npm install
       - name: run unit and integration tests
         run: npm run test:unit
-      - name: Cypress run
-        uses: cypress-io/github-action@v4.2.1
-        with:
-          browser: chrome
       - name: run npm build
         run: npm run build
