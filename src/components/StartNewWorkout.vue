@@ -48,7 +48,11 @@ export default {
               });
             })
             .catch((error) => {
-              console.log(error)
+              this.$snackbar.add({
+                type: 'error',
+                title: 'Error!',
+                text: error.response.data
+              });
             });
       }
     }
