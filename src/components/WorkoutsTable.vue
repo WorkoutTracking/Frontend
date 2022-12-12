@@ -1,30 +1,25 @@
 <template>
   <div class="row">
-    <div class="col-xl-12">
+    <div class="col-xl-12" v-if="workoutWithExercises.workoutIsValid">
       <table>
         <tbody>
-        <div v-for="(workout, x) in workoutsWithExercises" v-bind:key="x">
+        <div v-for="(workout, x) in workoutWithExercises" :key="workout.created_at">
           <tr>
-            <td>
+            <td data-test="workoutInfo">
               <h3>Workout</h3>
-              Name: {{ workout.name }} <br>
-              Date: {{ workout.created_at.substring(0,10) }} <br>
-              Time: {{ workout.created_at.substring(11, 19) }}
+              <p class="name">Name: {{ workout.name }} </p>
+              <p class="date">Date: {{ workout.created_at.substring(0,10) }}</p>
+              <p class="time">Time: {{ workout.created_at.substring(11, 19) }}</p>
             </td>
             <td>
               <h3>Exercises</h3>
-              <div v-if="workoutsWithExercises[x].Exercises.length > 0">
-                <div v-for="(exercise, i) in workoutsWithExercises[x].Exercises" v-bind:key="i">
-                  {{ exercise.name }}
-                </div>
-              </div>
-              <div v-else>
-                No exercises
+              <div v-for="(exercise, i) in workoutWithExercises[x].Exercises" v-bind:key="i">
+                {{ exercise.name }}
               </div>
             </td>
             <td>
               <div class="set-control-group d-flex justify-content-center align-items-center">
-                <router-link :to="'/workout/'+workout.id" class="">Edit workout</router-link>
+                <router-link :to="'/workout/'+workout.id" class="editWorkoutButton">Edit workout</router-link>
               </div>
             </td>
           </tr>
@@ -32,38 +27,78 @@
         </tbody>
       </table>
     </div>
+    <div v-else>
+      You have no workouts. Fill the above form and click on start new workout.
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import {onMounted, ref} from "vue";
 
 export default {
   name: 'WorkoutsTable',
-  setup() {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem("vue-token")
-      }
-    };
-    let workoutsWithExercises = ref([]);
+  data() {
+    return {
+      workoutWithExercises: {}
+    }
+  },
+  mounted() {
+    this.getData();
+  },
+  methods: {
+    async getData() {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.$keycloak.token
+        }
+      };
+      this.workoutWithExercises.workoutIsValid = false;
 
-    onMounted(async () => {
-      let tempWorkoutsWithExercise = await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/workouts`, config).then(r => r.data);
-      for (const workout of tempWorkoutsWithExercise) {
-        const index = tempWorkoutsWithExercise.indexOf(workout);
-        tempWorkoutsWithExercise[index].Exercises = await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/exercises/workout/`+workout.id, config).then(r => r.data);
+      await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/workouts/user/`+this.$keycloak.profile.email, config)
+          .then(async (response) => {
+            this.workoutWithExercises = response.data;
+            this.workoutWithExercises.workoutIsValid = true;
+          })
+          .catch(async (error) => {
+            this.workoutWithExercises.workoutIsValid = false;
+            console.log(error)
+            if(error.name === 'AxiosError')
+            {
+              this.$snackbar.add({
+                type: 'error',
+                title: 'Error!',
+                text: 'Backend service unavailable!'
+              });
+            } else {
+              this.$snackbar.add({
+                type: 'error',
+                title: 'Error!',
+                text: error
+              });
+            }
+          });
+
+      if (this.workoutWithExercises.workoutIsValid) {
+        for (const workout of this.workoutWithExercises) {
+          const index = this.workoutWithExercises.indexOf(workout);
+          await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/exercises/workout/`+workout.id, config)
+              .then(async (response) => {
+                this.workoutWithExercises[index].Exercises = response.data;
+              });
+        }
       }
-      workoutsWithExercises.value = tempWorkoutsWithExercise;
-    });
-    return {workoutsWithExercises}
-  }
+    },
+  },
 }
 </script>
 
 <style scoped>
+
+p {
+  margin: 0;
+}
 
 table {
   border-collapse: separate;
@@ -83,9 +118,5 @@ td {
   border: none;
   padding: 0px 10px 0px 30px !important;
   max-width: 100%;
-}
-
-.type-list-comma:last-child {
-  display: none;
 }
 </style>

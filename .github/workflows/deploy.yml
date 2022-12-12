@@ -16,6 +16,11 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: run npm test
-        run: npm run lint
+        run: npm run test:unit
+      - name: Cypress run
+        uses: cypress-io/github-action@v4.x.x # use the explicit version number
+        with:
+          build: npm run build
+          start: npm start
       - name: run npm build
         run: npm run build
