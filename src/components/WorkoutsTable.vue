@@ -3,13 +3,13 @@
     <div class="col-xl-12" v-if="workoutWithExercises.workoutIsValid">
       <table>
         <tbody>
-        <div v-for="(workout, x) in workoutWithExercises" :key="workout.created_at">
+        <div v-for="(workout, x) in workoutWithExercises" :key="workout.createdAt">
           <tr>
             <td data-test="workoutInfo">
               <h3>Workout</h3>
               <p class="name">Name: {{ workout.name }} </p>
-              <p class="date">Date: {{ workout.created_at.substring(0,10) }}</p>
-              <p class="time">Time: {{ workout.created_at.substring(11, 19) }}</p>
+              <p class="date">Date: {{ workout.createdAt.substring(0,10) }}</p>
+              <p class="time">Time: {{ workout.createdAt.substring(11, 19) }}</p>
             </td>
             <td>
               <h3>Exercises</h3>

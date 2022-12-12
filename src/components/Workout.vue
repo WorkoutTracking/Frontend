@@ -3,7 +3,7 @@
     <h1>Workout: {{ workoutWithExercisesAndSets.name }}</h1>
     <div class="mb-4">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <div v-for="(exercise, i) in workoutWithExercisesAndSets.Exercises" v-bind:key="exercise.created_at">
+        <div v-for="(exercise, i) in workoutWithExercisesAndSets.Exercises" v-bind:key="exercise.createdAt">
           <div class="col-sm">
             <div
                 style="padding: 15px; background-color: #2E2C42; filter: drop-shadow(0px 3px 6px #00000016); border-radius: 30px;">
@@ -29,7 +29,7 @@
                 <label class="set-form">Rest</label>
               </div>
 
-              <div v-for="(set, x) in workoutWithExercisesAndSets.Exercises[i].Sets" v-bind:key="set.created_at">
+              <div v-for="(set, x) in workoutWithExercisesAndSets.Exercises[i].Sets" v-bind:key="set.createdAt">
                 <div class="d-flex justify-content-center">
                   <form class="updateSet" v-on:submit.prevent="updateSet(set)">
                     <div class="d-flex justify-content-evenly align-items-center">
@@ -144,7 +144,8 @@ export default {
             this.workoutWithExercisesAndSets.workoutIsValid = true;
           })
           .catch(async (error) => {
-            await this.showSnackBar('error', 'Error!', error.data);
+            console.log(error)
+            await this.showSnackBar('error', 'Error!', error.response.data);
             this.workoutWithExercisesAndSets.workoutIsValid = error.response.status !== 404;
           });
 
@@ -155,10 +156,9 @@ export default {
           this.workoutWithExercisesAndSets.Exercises[index].Sets = await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/sets/exercise/` + exercise.id, this.config).then(r => r.data);
         }
       }
-      console.log(this.workoutWithExercisesAndSets)
     },
-    async deleteExercise(exercise_id) {
-      await axios.delete(`${process.env.VUE_APP_BACK_END_API_URL}/exercises/` + exercise_id + `/` + this.$keycloak.profile.email, this.config)
+    async deleteExercise(exerciseId) {
+      await axios.delete(`${process.env.VUE_APP_BACK_END_API_URL}/exercises/` + exerciseId + `/` + this.$keycloak.profile.email, this.config)
           .then(async () => {
             await this.showSnackBar('warning', 'Exercise deleted!');
             await this.getData();
@@ -180,8 +180,8 @@ export default {
             });
       }
     },
-    async createSet(exercise_id) {
-      await axios.post(`${process.env.VUE_APP_BACK_END_API_URL}/sets/` + exercise_id + `/` + this.$keycloak.profile.email, {}, this.config)
+    async createSet(exerciseId) {
+      await axios.post(`${process.env.VUE_APP_BACK_END_API_URL}/sets/` + exerciseId + `/` + this.$keycloak.profile.email, {}, this.config)
           .then(async () => {
             await this.showSnackBar('success', 'Set added!!', 'Your new set has been added.');
             await this.getData();
@@ -193,7 +193,6 @@ export default {
     async updateSet(set) {
       await axios.put(`${process.env.VUE_APP_BACK_END_API_URL}/sets/` + set.id + `/` + set.sets + `/` + set.reps + `/` + set.weight + `/` + set.rest + `/`+ this.$keycloak.profile.email, {}, this.config)
           .then(async (respons) => {
-            console.log(respons.data)
             if (respons.data === 'Set updated')
             {
               await this.showSnackBar('success', 'Set updated!', 'Your set has been updated.');
