@@ -26,6 +26,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4.2.1
         with:
-          browser: firefox
+          browser: chrome
       - name: run npm build
         run: npm run build
