@@ -45,5 +45,4 @@ describe('Workout', () => {
         cy.get('.restInput').should('have.value', '5')
 
     });
-
 })

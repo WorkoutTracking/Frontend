@@ -2,29 +2,31 @@
   <div class="row">
     <div class="col-xl-12" v-if="workoutWithExercises.workoutIsValid">
       <table>
-        <tbody>
-        <div v-for="(workout, x) in workoutWithExercises" :key="workout.createdAt">
-          <tr>
-            <td data-test="workoutInfo">
-              <h3>Workout</h3>
-              <p class="name">Name: {{ workout.name }} </p>
-              <p class="date">Date: {{ workout.createdAt.substring(0,10) }}</p>
-              <p class="time">Time: {{ workout.createdAt.substring(11, 19) }}</p>
-            </td>
-            <td>
-              <h3>Exercises</h3>
-              <div v-for="(exercise, i) in workoutWithExercises[x].Exercises" v-bind:key="i">
-                {{ exercise.name }}
-              </div>
-            </td>
-            <td>
-              <div class="set-control-group d-flex justify-content-center align-items-center">
-                <router-link :to="'/workout/'+workout.id" class="editWorkoutButton">Edit workout</router-link>
-              </div>
-            </td>
-          </tr>
-        </div>
-        </tbody>
+        <th>
+          <tbody>
+          <div v-for="(workout, x) in workoutWithExercises" :key="workout.createdAt">
+            <tr>
+              <td data-test="workoutInfo">
+                <h3>Workout</h3>
+                <p class="name">Name: {{ workout.name }} </p>
+                <p class="date">Date: {{ workout.createdAt.substring(0,10) }}</p>
+                <p class="time">Time: {{ workout.createdAt.substring(11, 19) }}</p>
+              </td>
+              <td>
+                <h3>Exercises</h3>
+                <div v-for="(exercise, i) in workoutWithExercises[x].Exercises" v-bind:key="i">
+                  {{ exercise.name }}
+                </div>
+              </td>
+              <td>
+                <div class="set-control-group d-flex justify-content-center align-items-center">
+                  <router-link :to="'/workout/'+workout.id" class="editWorkoutButton">Edit workout</router-link>
+                </div>
+              </td>
+            </tr>
+          </div>
+          </tbody>
+        </th>
       </table>
     </div>
     <div v-else>

@@ -7,7 +7,3 @@ export default {
   name: "StatsPage"
 }
 </script>
-
-<style scoped>
-
-</style>
