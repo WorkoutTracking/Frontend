@@ -13,7 +13,16 @@ let initOptions = {
     url: 'http://localhost:8484/', realm: 'workouttracking', clientId: 'frontend-service', onLoad:'login-required'
 }
 
-let keycloak = Keycloak(initOptions);
+function makeApp(){
+    const app = createApp(App);
+    app.config.globalProperties.$keycloak = keycloak;
+    app.use(SnackbarService);
+    app.use(router);
+    app.component("vue3-snackbar", Vue3Snackbar);
+    app.mount('#app');
+}
+
+let keycloak = new Keycloak(initOptions);
 
 keycloak.init({ onLoad: initOptions.onLoad }).then(async (auth) => {
     if (!auth) {
@@ -46,12 +55,7 @@ keycloak.init({ onLoad: initOptions.onLoad }).then(async (auth) => {
                 console.log("axios error: "+error)
             }
 
-            const app = createApp(App);
-            app.config.globalProperties.$keycloak = keycloak;
-            app.use(SnackbarService);
-            app.use(router);
-            app.component("vue3-snackbar", Vue3Snackbar);
-            app.mount('#app');
+            makeApp()
         } catch (error) {
             console.log("try catch error: "+error)
         }
@@ -70,6 +74,7 @@ keycloak.init({ onLoad: initOptions.onLoad }).then(async (auth) => {
         });
     }, 60000)
 }).catch((error) =>{
-    console.log("Authenticated Failed. Error: "+ error);
+    makeApp()
+    console.log("Authenticated Failed. Error: "+ error.error);
 });
 
