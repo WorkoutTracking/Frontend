@@ -144,13 +144,18 @@ export default {
             this.workoutWithExercisesAndSets.workoutIsValid = true;
           })
           .catch(async (error) => {
-            console.log(error)
             await this.showSnackBar('error', 'Error!', error.response.data);
             this.workoutWithExercisesAndSets.workoutIsValid = error.response.status !== 404;
           });
 
       if (this.workoutWithExercisesAndSets.workoutIsValid) {
-        this.workoutWithExercisesAndSets.Exercises = await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/exercises/workout/` + this.workoutWithExercisesAndSets.id, this.config).then(r => r.data);
+        await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/exercises/workout/` + this.workoutWithExercisesAndSets.id+`/`+this.$keycloak.profile.email, this.config)
+            .then(async (respone) => {
+              this.workoutWithExercisesAndSets.Exercises = respone.data;
+            }).catch(async (error) => {
+              await this.showSnackBar('warning', 'Warning!', error.response.data);
+              this.workoutWithExercisesAndSets.Exercises = [];
+            });
         for (const exercise of this.workoutWithExercisesAndSets.Exercises) {
           const index = this.workoutWithExercisesAndSets.Exercises.indexOf(exercise);
           this.workoutWithExercisesAndSets.Exercises[index].Sets = await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/sets/exercise/` + exercise.id, this.config).then(r => r.data);
@@ -176,7 +181,7 @@ export default {
               await this.getData();
             })
             .catch(async (error) => {
-              await this.showSnackBar('error', 'Error!', error.data);
+              await this.showSnackBar('error', 'Error!', error.response.data);
             });
       }
     },
