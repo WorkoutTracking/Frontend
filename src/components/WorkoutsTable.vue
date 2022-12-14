@@ -65,33 +65,28 @@ export default {
           })
           .catch(async (error) => {
             this.workoutWithExercises.workoutIsValid = false;
-            console.log(error)
-            if(error.name === 'AxiosError')
-            {
-              this.$snackbar.add({
-                type: 'error',
-                title: 'Error!',
-                text: 'Backend service unavailable!'
-              });
-            } else {
-              this.$snackbar.add({
-                type: 'error',
-                title: 'Error!',
-                text: error
-              });
-            }
+            await this.showSnackBar('error', 'Error!', error.response.data);
           });
 
       if (this.workoutWithExercises.workoutIsValid) {
         for (const workout of this.workoutWithExercises) {
           const index = this.workoutWithExercises.indexOf(workout);
-          await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/exercises/workout/`+workout.id, config)
+          await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/exercises/workout/`+workout.id+`/`+this.$keycloak.profile.email, config)
               .then(async (response) => {
                 this.workoutWithExercises[index].Exercises = response.data;
+              }).catch(async (error) => {
+                await this.showSnackBar('warning', 'Warning!', error.response.data);
               });
         }
       }
     },
+    async showSnackBar(type, title, text){
+      this.$snackbar.add({
+        type: type,
+        title: title,
+        text: text
+      });
+    }
   },
 }
 </script>
