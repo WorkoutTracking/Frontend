@@ -10,13 +10,26 @@ import './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
-try {
-    let initOptions = {
-        url: 'http://localhost:8484/', realm: 'workouttracking', clientId: 'frontend-service', onLoad:'login-required'
+function makeApp(error) {
+    if(error) {
+        const errorPage = createApp(ErrorPage);
+        errorPage.mount('#app');
+    } else {
+        const app = createApp(App);
+        app.config.globalProperties.$keycloak = keycloak;
+        app.use(SnackbarService);
+        app.use(router);
+        app.component("vue3-snackbar", Vue3Snackbar);
+        app.mount('#app');
     }
+}
+let initOptions = {
+    url: 'http://localhost:8484/', realm: 'workouttracking', clientId: 'frontend-service', onLoad:'login-required'
+}
 
-    let keycloak = new Keycloak(initOptions);
+let keycloak = new Keycloak(initOptions);
 
+try {
     keycloak.init({ onLoad: initOptions.onLoad }).then(async (auth) => {
         if (!auth) {
             window.location.reload();
@@ -36,30 +49,18 @@ try {
                 await axios.post(`${process.env.VUE_APP_BACK_END_API_URL}/` + keycloak.profile.username + `/` + keycloak.profile.email, {}, config)
                     .then(async () => {
                         console.log("User is added.")
-                        const app = createApp(App);
-                        app.config.globalProperties.$keycloak = keycloak;
-                        app.use(SnackbarService);
-                        app.use(router);
-                        app.component("vue3-snackbar", Vue3Snackbar);
-                        app.mount('#app');
+                        makeApp(false)
                     }).catch(async (error) => {
                         if (error.code === 'ERR_NETWORK') {
-                            const errorPage = createApp(ErrorPage);
-                            errorPage.mount('#app');
+                            makeApp(true)
                         } else {
                             console.log('User already exists')
-                            const app = createApp(App);
-                            app.config.globalProperties.$keycloak = keycloak;
-                            app.use(SnackbarService);
-                            app.use(router);
-                            app.component("vue3-snackbar", Vue3Snackbar);
-                            app.mount('#app');
+                            makeApp(false)
                         }
                     });
             } catch (err) {
                 console.log('Backend service unavailable')
-                const errorPage = createApp(ErrorPage);
-                errorPage.mount('#app');
+                makeApp(true)
             }
         }
 
@@ -77,12 +78,10 @@ try {
         }, 60000)
     }).catch((error) =>{
         console.log("Authenticated Failed. Error: "+ error.error);
-        const errorPage = createApp(ErrorPage);
-        errorPage.mount('#app');
+        makeApp(true)
     });
 } catch (error) {
-    const errorPage = createApp(ErrorPage);
-    errorPage.mount('#app');
+    makeApp(true)
 }
 
 
