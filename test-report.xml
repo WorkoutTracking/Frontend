@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+  <file path="C:\laragon\www\WorkoutTracking\Frontend\tests\unit\StartNewWorkout.spec.js">
+    <testCase name="StartNewWorkout.vue should render start new workout button" duration="22"/>
+  </file>
+</testExecutions>

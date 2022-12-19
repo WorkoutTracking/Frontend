@@ -21,6 +21,12 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: run unit and integration tests
-        run: npm run test:unit
+        run: npm run unit:test
+      - name: run cypress e2e tests and make report
+        run: npm run cypress:test
+      - name: Run static code analysis
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - name: run npm build
         run: npm run build
