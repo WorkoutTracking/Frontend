@@ -1,6 +1,7 @@
-projectKey=frontend
-serverUrl=http://localhost:9000
-serverVersion=9.7.1.62043
-dashboardUrl=http://localhost:9000/dashboard?id=frontend
-ceTaskId=AYURd6iWem1HL3n9KuMZ
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AYURd6iWem1HL3n9KuMZ
+organization=workouttracking
+projectKey=WorkoutTracking_Frontend
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.35824
+dashboardUrl=https://sonarcloud.io/dashboard?id=WorkoutTracking_Frontend
+ceTaskId=AYUrG2XhAXGJJtrI3NDE
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AYUrG2XhAXGJJtrI3NDE

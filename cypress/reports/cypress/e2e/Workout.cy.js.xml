@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testExecutions version="1">
+  <file path="cypress/e2e/Workout.cy.js">
+    <testCase name="Workout - should add exercise to Legs workout" duration="4406"/>
+    <testCase name="Workout - should add set to workout" duration="2776"/>
+    <testCase name="Workout - should update set" duration="2127"/>
+  </file>
+</testExecutions>
