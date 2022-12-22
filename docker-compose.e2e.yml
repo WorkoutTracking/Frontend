@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   keycloak:
-    image: carlovankessel/workouttracking/keycloak:latest
+    image: carlovankessel/keycloak:latest
     container_name: keycloak
     ports:
       - "8484:8484"
@@ -9,7 +9,7 @@ services:
       - workouttracking_network
 
   postgres:
-    image: carlovankessel/workouttracking/postgres:latest
+    image: carlovankessel/postgres:latest
     container_name: postgres
     ports:
       - "5432:5432"
@@ -17,7 +17,7 @@ services:
       - workouttracking_network
 
   quarkus:
-    image: carlovankessel/workouttracking/backend:latest
+    image: carlovankessel/backend:latest
     container_name: backend
     ports:
       - "8080:8080"
