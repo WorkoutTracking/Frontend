@@ -38,17 +38,17 @@ export default {
         };
 
         await axios.post(`${process.env.VUE_APP_BACK_END_API_URL}/workouts/` + this.form.name + `/` + this.$keycloak.profile.email, {}, config)
-            .then((res) => {
+            .then(async (res) => {
               this.form.name = '';
               //Go to overview of workout. give the location with it and make axios request with this link to get workout info. then make axios request for all exercises
-              router.push('/workout/' + res.data.id);
-              this.$snackbar.add({
+              await router.push('/workout/' + res.data.id);
+              await this.$snackbar.add({
                 type: 'info',
                 title: 'Workout added!'
               });
             })
-            .catch((error) => {
-              this.$snackbar.add({
+            .catch(async (error) => {
+              await this.$snackbar.add({
                 type: 'error',
                 title: 'Error!',
                 text: error.response.data

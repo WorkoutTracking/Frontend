@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<testExecutions version="1">
-  <file path="cypress/e2e/WorkoutTable.cy.js">
-    <testCase name="WorkoutTable - should load previous workout data" duration="2989"/>
-    <testCase name="WorkoutTable - should add a new workout called Legs" duration="1763"/>
-  </file>
-</testExecutions>

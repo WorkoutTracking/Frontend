@@ -60,10 +60,11 @@ export default {
 
       await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/workouts/user/`+this.$keycloak.profile.email, config)
           .then(async (response) => {
-            this.workoutWithExercises = response.data;
+            this.workoutWithExercises = await response.data;
             this.workoutWithExercises.workoutIsValid = true;
           })
           .catch(async (error) => {
+            console.log(error)
             this.workoutWithExercises.workoutIsValid = false;
             await this.showSnackBar('error', 'Error!', error.response.data);
           });
@@ -73,15 +74,17 @@ export default {
           const index = this.workoutWithExercises.indexOf(workout);
           await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/exercises/workout/`+workout.id+`/`+this.$keycloak.profile.email, config)
               .then(async (response) => {
-                this.workoutWithExercises[index].Exercises = response.data;
+                this.workoutWithExercises[index].Exercises = await response.data;
               }).catch(async (error) => {
-                await this.showSnackBar('warning', 'Warning!', error.response.data);
+                if (await error.response.status !== 404) {
+                  await this.showSnackBar('error', 'Error!', error.response.data);
+                }
               });
         }
       }
     },
     async showSnackBar(type, title, text){
-      this.$snackbar.add({
+      await this.$snackbar.add({
         type: type,
         title: title,
         text: text

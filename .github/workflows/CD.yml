@@ -1,0 +1,52 @@
+name: CD Frontend to Firebase
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  e2e_tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ 18.x ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Run docker compose as background services
+        run: docker-compose -f docker-compose.e2e.yml up -d
+      - name: Check docker ip
+        run: docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' backend
+      - name: Cypress install dependencies
+        run: npm install
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          install: false
+          build: npm run build
+          start: npm run serve
+
+  build_and_deploy:
+    needs: e2e_tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: npm install
+      - name: Build application
+        run: npm run build
+      - uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

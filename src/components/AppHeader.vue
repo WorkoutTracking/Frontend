@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     async logout() {
-      this.$keycloak.logout();
+      await this.$keycloak.logout();
     }
   }
 };
