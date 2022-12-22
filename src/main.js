@@ -24,7 +24,7 @@ function makeApp(error) {
     }
 }
 let initOptions = {
-    url: 'http://localhost:8484/', realm: 'workouttracking', clientId: 'frontend-service', onLoad:'login-required'
+    messageReceiveTimeout: 1000, url: 'http://localhost:8484/', realm: 'workouttracking', clientId: 'frontend-service', onLoad:'login-required'
 }
 
 let keycloak = new Keycloak(initOptions);
@@ -48,18 +48,19 @@ keycloak.init({ onLoad: initOptions.onLoad }).then(async (auth) => {
             await axios.post(`${process.env.VUE_APP_BACK_END_API_URL}/` + keycloak.profile.username + `/` + keycloak.profile.email, {}, config)
                 .then(async () => {
                     console.log("User is added.")
-                    makeApp(false)
+                    await makeApp(false)
                 }).catch(async (error) => {
-                    if (error.code === 'ERR_NETWORK') {
-                        makeApp(true)
+                    if (await error.code === 'ERR_NETWORK') {
+                        await makeApp(true)
                     } else {
                         console.log('User already exists')
-                        makeApp(false)
+                        console.log(error)
+                        await makeApp(false)
                     }
                 });
         } catch (err) {
             console.log('Backend service unavailable')
-            makeApp(true)
+            await makeApp(true)
         }
     }
 
@@ -75,9 +76,9 @@ keycloak.init({ onLoad: initOptions.onLoad }).then(async (auth) => {
             console.log('Failed to refresh token');
         });
     }, 60000)
-}).catch((error) =>{
+}).catch(async (error) =>{
     console.log("Authenticated Failed. Error: "+ error.error);
-    makeApp(true)
+    await makeApp(true)
 });
 
 

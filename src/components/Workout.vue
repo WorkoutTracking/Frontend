@@ -133,25 +133,25 @@ export default {
       return !!this.addExerciseForm.name
     }
   },
-  mounted() {
-    this.getData();
+  async mounted() {
+    await this.getData();
   },
   methods: {
     async getData() {
       await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/workouts/` + this.$route.params.id + `/` + this.$keycloak.profile.email, this.config)
           .then(async (response) => {
-            this.workoutWithExercisesAndSets = response.data;
+            this.workoutWithExercisesAndSets = await response.data;
             this.workoutWithExercisesAndSets.workoutIsValid = true;
           })
           .catch(async (error) => {
             await this.showSnackBar('error', 'Error!', error.response.data);
-            this.workoutWithExercisesAndSets.workoutIsValid = error.response.status !== 404;
+            this.workoutWithExercisesAndSets.workoutIsValid = await error.response.status !== 404;
           });
 
       if (this.workoutWithExercisesAndSets.workoutIsValid) {
         await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/exercises/workout/` + this.workoutWithExercisesAndSets.id+`/`+this.$keycloak.profile.email, this.config)
-            .then(async (respone) => {
-              this.workoutWithExercisesAndSets.Exercises = respone.data;
+            .then(async (response) => {
+              this.workoutWithExercisesAndSets.Exercises = await response.data;
             }).catch(async (error) => {
               await this.showSnackBar('warning', 'Warning!', error.response.data);
               this.workoutWithExercisesAndSets.Exercises = [];
@@ -197,13 +197,13 @@ export default {
     },
     async updateSet(set) {
       await axios.put(`${process.env.VUE_APP_BACK_END_API_URL}/sets/` + set.id + `/` + set.sets + `/` + set.reps + `/` + set.weight + `/` + set.rest + `/`+ this.$keycloak.profile.email, {}, this.config)
-          .then(async (respons) => {
-            if (respons.data === 'Set updated')
+          .then(async (response) => {
+            if (await response.data === 'Set updated')
             {
               await this.showSnackBar('success', 'Set updated!', 'Your set has been updated.');
               await this.getData();
             } else {
-              await this.showSnackBar('error', 'Error!', respons.data);
+              await this.showSnackBar('error', 'Error!', response.data);
             }
 
           })
@@ -222,7 +222,7 @@ export default {
           });
     },
     async showSnackBar(type, title, text){
-      this.$snackbar.add({
+      await this.$snackbar.add({
         type: type,
         title: title,
         text: text
