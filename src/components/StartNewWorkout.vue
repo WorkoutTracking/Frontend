@@ -3,7 +3,7 @@
     <div class="mb-3 col-2">
       <input id="name" v-model="form.name" class="form-control" placeholder="Workout name" type="text">
     </div>
-    <button :disabled="!formIsValid" class="btn btn-lg btn-add-workout" data-test="startNewWorkoutButton" type="submit">
+    <button :disabled="!formIsValid" class="btn btn-lg btn-add-workout" type="submit">
       Start New Workout
     </button>
   </form>
