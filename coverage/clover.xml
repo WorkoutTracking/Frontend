@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1671537633737" clover="3.2.0">
-  <project timestamp="1671537633737" name="All files">
-    <metrics statements="213" coveredstatements="92" conditionals="32" coveredconditionals="4" methods="46" coveredmethods="1" elements="291" coveredelements="97" complexity="0" loc="213" ncloc="213" packages="3" files="12" classes="12"/>
+<coverage generated="1672172907742" clover="3.2.0">
+  <project timestamp="1672172907743" name="All files">
+    <metrics statements="214" coveredstatements="113" conditionals="32" coveredconditionals="4" methods="46" coveredmethods="3" elements="292" coveredelements="120" complexity="0" loc="214" ncloc="214" packages="3" files="12" classes="12"/>
     <package name="src">
-      <metrics statements="88" coveredstatements="16" conditionals="10" coveredconditionals="0" methods="19" coveredmethods="0"/>
+      <metrics statements="89" coveredstatements="27" conditionals="10" coveredconditionals="0" methods="19" coveredmethods="1"/>
       <file name="App.vue" path="C:\laragon\www\WorkoutTracking\Frontend\src\App.vue">
         <metrics statements="14" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="4" count="0" type="stmt"/>
@@ -22,18 +22,18 @@
         <line num="55" count="0" type="stmt"/>
       </file>
       <file name="ErrorPage.vue" path="C:\laragon\www\WorkoutTracking\Frontend\src\ErrorPage.vue">
-        <metrics statements="11" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="4" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="25" count="0" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="31" count="0" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="38" count="0" type="stmt"/>
-        <line num="39" count="0" type="stmt"/>
+        <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
       </file>
       <file name="HomePage.vue" path="C:\laragon\www\WorkoutTracking\Frontend\src\HomePage.vue">
         <metrics statements="9" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -60,7 +60,7 @@
         <line num="22" count="1" type="stmt"/>
       </file>
       <file name="main.js" path="C:\laragon\www\WorkoutTracking\Frontend\src\main.js">
-        <metrics statements="36" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="8" coveredmethods="0"/>
+        <metrics statements="37" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="8" coveredmethods="0"/>
         <line num="14" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="15" count="0" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
@@ -87,16 +87,17 @@
         <line num="54" count="0" type="stmt"/>
         <line num="56" count="0" type="stmt"/>
         <line num="57" count="0" type="stmt"/>
-        <line num="61" count="0" type="stmt"/>
+        <line num="58" count="0" type="stmt"/>
         <line num="62" count="0" type="stmt"/>
-        <line num="66" count="0" type="stmt"/>
+        <line num="63" count="0" type="stmt"/>
         <line num="67" count="0" type="stmt"/>
-        <line num="68" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="69" count="0" type="stmt"/>
-        <line num="71" count="0" type="stmt"/>
-        <line num="75" count="0" type="stmt"/>
-        <line num="79" count="0" type="stmt"/>
+        <line num="68" count="0" type="stmt"/>
+        <line num="69" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="70" count="0" type="stmt"/>
+        <line num="72" count="0" type="stmt"/>
+        <line num="76" count="0" type="stmt"/>
         <line num="80" count="0" type="stmt"/>
+        <line num="81" count="0" type="stmt"/>
       </file>
       <file name="registerServiceWorker.js" path="C:\laragon\www\WorkoutTracking\Frontend\src\registerServiceWorker.js">
         <metrics statements="9" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="7" coveredmethods="0"/>
@@ -112,19 +113,19 @@
       </file>
     </package>
     <package name="src.components">
-      <metrics statements="123" coveredstatements="74" conditionals="22" coveredconditionals="4" methods="27" coveredmethods="1"/>
+      <metrics statements="123" coveredstatements="84" conditionals="22" coveredconditionals="4" methods="27" coveredmethods="2"/>
       <file name="AppFooter.vue" path="C:\laragon\www\WorkoutTracking\Frontend\src\components\AppFooter.vue">
-        <metrics statements="10" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="4" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="25" count="0" type="stmt"/>
+        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
       </file>
       <file name="AppHeader.vue" path="C:\laragon\www\WorkoutTracking\Frontend\src\components\AppHeader.vue">
         <metrics statements="19" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="6" coveredmethods="0"/>
@@ -160,10 +161,10 @@
         <line num="77" count="1" type="stmt"/>
         <line num="78" count="1" type="stmt"/>
         <line num="81" count="1" type="stmt"/>
-        <line num="83" count="1" type="stmt"/>
+        <line num="83" count="3" type="stmt"/>
         <line num="85" count="0" type="cond" truecount="2" falsecount="2"/>
         <line num="88" count="0" type="cond" truecount="2" falsecount="0"/>
-        <line num="98" count="1" type="stmt"/>
+        <line num="97" count="1" type="stmt"/>
       </file>
       <file name="Workout.vue" path="C:\laragon\www\WorkoutTracking\Frontend\src\components\Workout.vue">
         <metrics statements="57" coveredstatements="44" conditionals="8" coveredconditionals="0" methods="13" coveredmethods="0"/>

@@ -64,7 +64,6 @@ export default {
             this.workoutWithExercises.workoutIsValid = true;
           })
           .catch(async (error) => {
-            console.log(error)
             this.workoutWithExercises.workoutIsValid = false;
             await this.showSnackBar('error', 'Error!', error.response.data);
           });

@@ -5,7 +5,7 @@ on:
     branches: ["main"]
 
 jobs:
-  # Dont run e2e tests because i cant get the docker images to work. If these images worked the following job would test the cypress e2e tests:
+  # Don't run e2e tests because I cant get the docker images to work. If these images worked the following job would test the cypress e2e tests:
 #  e2e_tests:
 #    runs-on: ubuntu-latest
 #
@@ -34,6 +34,7 @@ jobs:
 
   build_and_deploy:
 #    needs: e2e_tests
+    name: Build and Deploy To Firebase
     runs-on: ubuntu-latest
 
     steps:
@@ -49,3 +50,21 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_WORKOUTTRACKING_WT }}'
           channelId: live
           projectId: workouttracking-wt
+
+  performance_test:
+    name: Lighthouse Performance Test
+    needs: build_and_deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Lighthouse
+        id: lighthouse
+        uses: treosh/lighthouse-action@v3
+        with:
+          url: https://workouttracking-wt.web.app/
+          extra-args: --only-categories=performance,accessibility,best-practices,seo,pwa
+      - name: Upload Lighthouse report
+        uses: actions/upload-artifact@v2
+        with:
+          name: lighthouse-report
+          path: ${{ steps.lighthouse.outputs.reportPath }}

@@ -5,7 +5,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  integration_and_unit_tests:
+  build:
+    name: Integration and Unit Tests
     runs-on: ubuntu-latest
 
     strategy:
@@ -26,6 +27,7 @@ jobs:
         run: npm run unit:test
 
   sonarcloud:
+    name: SonarCloud
     runs-on: ubuntu-latest
 
     steps:
@@ -33,5 +35,4 @@ jobs:
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
