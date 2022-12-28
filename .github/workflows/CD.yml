@@ -57,14 +57,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Lighthouse
-        id: lighthouse
-        uses: treosh/lighthouse-action@v3
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
         with:
-          url: https://workouttracking-wt.web.app/
-          extra-args: --only-categories=performance,accessibility,best-practices,seo,pwa
-      - name: Upload Lighthouse report
-        uses: actions/upload-artifact@v2
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@v9
         with:
-          name: lighthouse-report
-          path: ${{ steps.lighthouse.outputs.reportPath }}
+          urls: https://workouttracking-wt.web.app/
+          budgetPath: ./budget.json # test performance budgets
+          uploadArtifacts: true # save results as an action artifacts
+          temporaryPublicStorage: true # upload lighthouse report to the temporary storage
