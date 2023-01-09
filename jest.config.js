@@ -9,5 +9,5 @@ module.exports = {
   },
   collectCoverage: true,
   coverageDirectory: "coverage",
-  collectCoverageFrom: ["src/**/*.{js,vue}"]
+  collectCoverageFrom: ["src/*/*.{js,vue}", "src/*.{js,vue}"]
 }

@@ -68,7 +68,7 @@ export default {
             await this.showSnackBar('error', 'Error!', error.response.data);
           });
 
-      if (this.workoutWithExercises.workoutIsValid) {
+      if (await this.workoutWithExercises.workoutIsValid) {
         for (const workout of this.workoutWithExercises) {
           const index = this.workoutWithExercises.indexOf(workout);
           await axios.get(`${process.env.VUE_APP_BACK_END_API_URL}/exercises/workout/`+workout.id+`/`+this.$keycloak.profile.email, config)

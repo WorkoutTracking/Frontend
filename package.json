@@ -7,8 +7,7 @@
     "build": "vue-cli-service build",
     "unit:test": "vue-cli-service test:unit",
     "cypress:test": "cypress run",
-    "sonar": "sonar-scanner",
-    "test:coverage": "jest --coverage"
+    "sonar": "sonar-scanner"
   },
   "dependencies": {
     "-": "^0.0.1",

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
-  <file path="C:\laragon\www\WorkoutTracking\Frontend\tests\unit\ErrorPage.spec.js">
-    <testCase name="ErrorPage.vue should render h1 with text" duration="33"/>
-  </file>
   <file path="C:\laragon\www\WorkoutTracking\Frontend\tests\unit\StartNewWorkout.spec.js">
-    <testCase name="StartNewWorkout.vue should render input for a new workout" duration="23"/>
-    <testCase name="StartNewWorkout.vue should render start new workout button" duration="4"/>
-    <testCase name="StartNewWorkout.vue should test" duration="4"/>
+    <testCase name="Should render input for a new workout" duration="18"/>
+    <testCase name="Should render start new workout button" duration="3"/>
+    <testCase name="Should check if form is not valid because the input is not filled" duration="2"/>
+  </file>
+  <file path="C:\laragon\www\WorkoutTracking\Frontend\tests\unit\ErrorPage.spec.js">
+    <testCase name="should render h1 with text" duration="12"/>
   </file>
 </testExecutions>
