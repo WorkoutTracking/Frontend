@@ -43,6 +43,5 @@ describe('Workout', () => {
         cy.get('.repsInput').should('have.value', '8')
         cy.get('.weightInput').should('have.value', '120')
         cy.get('.restInput').should('have.value', '5')
-
     });
 })

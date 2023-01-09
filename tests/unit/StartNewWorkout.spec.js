@@ -1,34 +1,32 @@
 import {mount} from '@vue/test-utils'
 import startNewWorkout from "@/components/StartNewWorkout";
 
-describe("StartNewWorkout.vue", () => {
-    it('should render input for a new workout', function () {
-        //Arrange
-        const wrapper = mount(startNewWorkout)
+test('Should render input for a new workout', () => {
+    //Arrange
+    const wrapper = mount(startNewWorkout)
 
-        //Act
-        const newWorkoutInput = wrapper.get('.form-control')
+    //Act
+    const newWorkoutInput = wrapper.get('.form-control')
 
-        //Assert
-        expect(newWorkoutInput.element).toBeTruthy();
-    });
+    //Assert
+    expect(newWorkoutInput.element).toBeTruthy();
+})
 
-    it('should render start new workout button', async () => {
-        //Arrange
-        const wrapper = mount(startNewWorkout)
+test('Should render start new workout button', () => {
+    //Arrange
+    const wrapper = mount(startNewWorkout)
 
-        //Act
-        const newWorkoutButton = wrapper.get('.btn-add-workout')
+    //Act
+    const newWorkoutButton = wrapper.get('.btn-add-workout')
 
-        //Assert
-        expect(newWorkoutButton.text()).toBe("Start New Workout")
-    });
+    //Assert
+    expect(newWorkoutButton.text()).toBe("Start New Workout")
+})
 
-    it('should test', function () {
-        //Arrange
-        const wrapper = mount(startNewWorkout)
+test('Should check if form is not valid because the input is not filled', () => {
+    //Arrange
+    const wrapper = mount(startNewWorkout)
 
-        //Assert
-        expect(wrapper.vm.formIsValid).toBeFalsy()
-    });
+    //Assert
+    expect(wrapper.vm.formIsValid).toBeFalsy()
 })
