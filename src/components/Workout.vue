@@ -233,6 +233,17 @@ export default {
 </script>
 
 <style scoped>
+
+@media only screen and (max-width: 600px) {
+  .set-control-group {
+    padding-right: 30px !important;
+  }
+
+  .set-form {
+    padding: .375rem 0.8rem !important;
+  }
+}
+
 .set-form-control {
   width: 15%;
   padding: .375rem .75rem;
