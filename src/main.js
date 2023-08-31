@@ -24,7 +24,7 @@ function makeApp(error) {
     }
 }
 let initOptions = {
-    messageReceiveTimeout: 1000, url: 'http://localhost:8484/', realm: 'workouttracking', clientId: 'frontend-service', onLoad:'login-required'
+    messageReceiveTimeout: 1000, url: 'http://192.168.2.171:8484/', realm: 'workouttracking', clientId: 'frontend-service', onLoad:'login-required'
 }
 
 let keycloak = new Keycloak(initOptions);
