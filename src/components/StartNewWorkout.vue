@@ -1,7 +1,7 @@
 <template>
   <form class="startNewWorkout" v-on:submit.prevent="startWorkout">
     <div class="mb-3 col-2">
-      <input id="name" v-model="form.name" class="form-control" placeholder="Workout name" type="text">
+      <input id="name" v-model="form.name" class="form-control input-add-workout" placeholder="Workout name" type="text">
     </div>
     <button :disabled="!formIsValid" class="btn btn-lg btn-add-workout" type="submit">
       Start New Workout
@@ -62,6 +62,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  @media only screen and (max-width: 600px) {
+    .input-add-workout {
+      width: auto;
+    }
+  }     
 .btn-add-workout {
   color: white;
   border: none;

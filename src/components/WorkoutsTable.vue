@@ -65,7 +65,7 @@ export default {
           })
           .catch(async (error) => {
             this.workoutWithExercises.workoutIsValid = false;
-            await this.showSnackBar('error', 'Error!', error.response.data);
+            await this.showSnackBar('warning', 'Warning!', error.response.data);
           });
 
       if (await this.workoutWithExercises.workoutIsValid) {
@@ -76,7 +76,7 @@ export default {
                 this.workoutWithExercises[index].Exercises = await response.data;
               }).catch(async (error) => {
                 if (await error.response.status !== 404) {
-                  await this.showSnackBar('error', 'Error!', error.response.data);
+                  await this.showSnackBar('warning', 'Warning!', error.response.data);
                 }
               });
         }

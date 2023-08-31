@@ -34,10 +34,10 @@
                   <form class="updateSet" v-on:submit.prevent="updateSet(set)">
                     <div class="d-flex justify-content-evenly align-items-center">
                       <span class="set-number-count">{{ x + 1 }}</span>
-                      <input v-model="set.sets" :placeholder="set.sets" class="set-form-control setsInput" required type="text"/>
-                      <input v-model="set.reps" :placeholder="set.reps" class="set-form-control repsInput" required type="text"/>
-                      <input v-model="set.weight" :placeholder="set.weight" class="set-form-control weightInput" required type="text"/>
-                      <input v-model="set.rest" :placeholder="set.rest" class="set-form-control restInput" required type="text"/>
+                        <input :style="{ color: set.placeHolder ? 'grey' : '' }" v-model="set.sets" :placeholder="set.sets" class="set-form-control setsInput" required type="text"/>
+                        <input :style="{ color: set.placeHolder ? 'grey' : '' }" v-model="set.reps" :placeholder="set.reps" class="set-form-control repsInput" required type="text"/>
+                        <input :style="{ color: set.placeHolder ? 'grey' : '' }" v-model="set.weight" :placeholder="set.weight" class="set-form-control weightInput" required type="text"/>
+                        <input :style="{ color: set.placeHolder ? 'grey' : '' }" v-model="set.rest" :placeholder="set.rest" class="set-form-control restInput" required type="text"/>
                       <button class="btn btn-update-set align-items-end UpdateSetButton"
                               type="submit">
                         <svg height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
@@ -243,6 +243,11 @@ export default {
     padding: .375rem 0.8rem !important;
   }
 }
+
+.place-holder-text {
+  color: grey;
+}
+
 
 .set-form-control {
   width: 15%;
